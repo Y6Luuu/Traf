@@ -7,7 +7,7 @@ import pandas as pd
 #window creating
 window = tk.Tk() 
 window.title('LC Docs Printer')
-window.geometry('500x300')  # 这里的乘是小x
+window.geometry('500x250')  # 这里的乘是小x
 
 def get_available_printers():
     return [printer[2] for printer in win32print.EnumPrinters(4)]
@@ -41,7 +41,7 @@ refresh_button = tk.Button(window, text='Refresh', command=update_default_printe
 refresh_button.place(x=400, y=10)
 
 selected_printer = tk.StringVar()
-printer_choice_menu = ttk.Combobox(window, textvariable=selected_printer, values=get_available_printers(), width=35, state='readonly')
+printer_choice_menu = ttk.Combobox(window, textvariable=selected_printer, values=get_available_printers(), width=50, state='readonly')
 printer_choice_menu.place(x=120, y=150)
 
 def set_default_printer():
@@ -49,7 +49,7 @@ def set_default_printer():
     update_default_printer_label()
 
 set_default_printer_button = tk.Button(window, text='Set', command=set_default_printer)
-set_default_printer_button.place(x=385, y=145, width=50)
+set_default_printer_button.place(x=445, y=145, width=50)
 
 # path and printer info entry
 # path
@@ -67,6 +67,7 @@ def printing():
     weight_no = df.iat[2,1]
     coo_no = df.iat[3,1]
     pl_no = df.iat[4,1]
+    cl_no = df.iat[5,1]
 
     # data_invoice = input("please enter the invoice amount: ")
     # data_assay = input("please enter the assay amount: ")
@@ -79,6 +80,7 @@ def printing():
     x3=int(weight_no)
     x4=int(coo_no)
     x5=int(pl_no)
+    x6=int(cl_no)
 
     #index definition
     i1 = 1
@@ -95,6 +97,9 @@ def printing():
 
     i5 = 1
     sum5 = 0
+
+    i6 = 1
+    sum6 = 0
     
     while i1 <= x1:
         print('while loop')
@@ -142,6 +147,15 @@ def printing():
         printer_file(path + '\PL.docx')
         sum5 = sum5 + i5
         i5 = i5 + 1
+
+    print ('出while循环.')
+
+    while i6 <= x6:
+        print('while loop')
+        print ('sum = %d, i = %d' % (sum6, i6))
+        printer_file(path + '\CL.docx')
+        sum5 = sum6 + i6
+        i6 = i6 + 1
 
     print ('出while循环.')
     l = tk.Label(window, bg='pink', width=20, height=3, text='finish', font=('Arial', 14)).place(x=145, y= 40)
